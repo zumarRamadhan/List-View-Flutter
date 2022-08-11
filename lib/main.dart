@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:listview/TabBar.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: MyApp(),
+    home: TabbarExample(),
   ));
 }
 
@@ -13,26 +14,21 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<User> users = [
-    User(nama: "Muhammad Firdan Azhari", Kelas: "11 PPLG 1"),
-    User(nama: "Bayu Septian Kurniawan", Kelas: "11 PPLG 1"),
-    User(nama: "Muh Wahyu Ageng Pambudi", Kelas: "11 PPLG 1"),
-    User(nama: "Muhammad Nurwahid Bimawan", Kelas: "11 PPLG 1"),
-    User(nama: "Muhammad Vitto Corleone", Kelas: "11 PPLG 1"),
-    User(nama: "Ahmad Aziz Wira Widodo", Kelas: "11 PPLG 1"),
-    User(nama: "Javier Gavra Abhinaya", Kelas: "11 PPLG 1"),
-    User(nama: "Daffa Syauqi Syarif", Kelas: "11 PPLG 1"),
-    User(nama: "Khoiru Rizal Kalam Ismail", Kelas: "11 PPLG 1"),
-    User(nama: "Risqi Agung Pradana", Kelas: "11 PPLG 1"),
-    User(nama: "Maulana Rifky Adityo", Kelas: "11 PPLG 1"),
+    User(nama: "Muhammad Firdan Azhari", Kelas: "Hallo"),
+    User(nama: "Bayu Septian Kurniawan", Kelas: "Hai"),
+    User(nama: "Muh Wahyu Ageng Pambudi", Kelas: "Hello"),
+    User(nama: "Muhammad Nurwahid Bimawan", Kelas: "Oi"),
+    User(nama: "Muhammad Vitto Corleone", Kelas: "Hey"),
+    User(nama: "Ahmad Aziz Wira Widodo", Kelas: "Bro"),
+    User(nama: "Javier Gavra Abhinaya", Kelas: "Ngab"),
+    User(nama: "Daffa Syauqi Syarif", Kelas: "Lur"),
+    User(nama: "Khoiru Rizal Kalam Ismail", Kelas: "Woi"),
+    User(nama: "Risqi Agung Pradana", Kelas: "Mas"),
+    User(nama: "Maulana Rifky Adityo", Kelas: "Bang"),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("List Siswa Kelas 11 PPLG 1"),
-          backgroundColor: Colors.green,
-        ),
         body: 
         ListView.builder(
           padding: EdgeInsets.only(bottom: 20),
@@ -40,9 +36,30 @@ class _MyAppState extends State<MyApp> {
           itemBuilder: (BuildContext context, int index) {
             final User list = users[index];
             return InkWell(
-            onTap: (){
-            // Do something
-            },
+              onLongPress: () {
+                  showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Hapus Item'),
+                        content: const Text('Tekan Ok untuk Menghapus'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context,'ok');
+                              setState(() {
+                                users.remove(list);
+                              });
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                },
             child: Card(
               child: Container(
                 height: 70,
